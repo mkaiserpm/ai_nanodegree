@@ -11,13 +11,34 @@ def only_choice(values):
     """
     # TODO: Implement only choice strategy here
     checkNums = '987654321'
-    for box,units_ in units.items():
-        numcount = 0
-        for num in checkNums:
-            for pbox in units_:
-                if num in values[pbox]:
+    for unit in unitlist:
+        for num in checkNums:   
+            numcount = 0
+            bplace = None 
+            for boxid in unit:
+                if num in values[boxid]:
                     numcount+=1
+                    bplace = boxid
             if numcount == 1:
-                values[box] = num
+                values[bplace] = num
                 
     return values
+
+def eliminate(values):
+    """Eliminate values from peers of each box with a single value.
+
+    Go through all the boxes, and whenever there is a box with a single value,
+    eliminate this value from the set of values of all its peers.
+
+    Args:
+        values: Sudoku in dictionary form.
+    Returns:
+        Resulting Sudoku in dictionary form after eliminating values.
+    """
+    solved_values = [box for box in values.keys() if len(values[box]) == 1]
+    for box in solved_values:
+        digit = values[box]
+        for peer in peers[box]:
+            values[peer] = values[peer].replace(digit,'')
+    return values
+
