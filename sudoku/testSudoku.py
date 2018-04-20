@@ -5,7 +5,7 @@ Created on 20.04.2018
 '''
 import unittest
 from utils import *
-from functions import eliminate,only_choice
+from functions import reduce_puzzle
 
 class Test(unittest.TestCase):
 
@@ -27,6 +27,14 @@ class Test(unittest.TestCase):
         print("Only Choice Step:")
         print("")
         display(sudoku2)
+    
+    def testIteration(self):
+        sudoku = self.sudoku
+        solved = reduce_puzzle(sudoku)
+        self.assertNotEqual(False,solved,"sudoku stalled, no solution found!")
+        print("Sudoku Solved!")
+        display(solved)
+        
         
 
 
